@@ -1,0 +1,151 @@
+---
+title: "Machine Learning"
+author: "Jitendra Gaur"
+date: "Monday, October 27, 2014"
+output: html_document
+---
+
+Loading the training and testing dataset.
+```{r}
+trainingOrg = read.csv(file.choose(), na.strings=c("", "NA", "NULL"))
+testingOrg = read.csv(file.choose(), na.strings=c("", "NA", "NULL"))
+
+```
+
+Looking at the total number of observation and total variables using dimension command
+```{r}
+dim(trainingOrg)
+dim(testingOrg)
+```
+
+
+Removing variables that have too many NA values.
+```{r}
+training.dena <- trainingOrg[ , colSums(is.na(trainingOrg)) == 0]
+dim(training.dena)
+
+```
+Removing irrelevant variables.
+```{r}
+remove = c('X', 'user_name', 'raw_timestamp_part_1', 'raw_timestamp_part_2', 'cvtd_timestamp', 'new_window', 'num_window')
+training.dere <- training.dena[, -which(names(training.dena) %in% remove)]
+dim(training.dere)
+
+```
+Check the variables that have extremely low variance (this method is useful nearZeroVar() )
+```{r}
+library(caret)
+zeroVar= nearZeroVar(training.dere[sapply(training.dere, is.numeric)], saveMetrics = TRUE)
+training.nonzerovar = training.dere[,zeroVar[, 'nzv']==0]
+dim(training.nonzerovar)
+```
+
+Remove highly correlated variables
+```{r}
+corrMatrix <- cor(na.omit(training.nonzerovar[sapply(training.nonzerovar, is.numeric)]))
+dim(corrMatrix)
+```
+
+We will remove those variable which have high correlation.
+```{r, echo=FALSE}
+removecor = findCorrelation(corrMatrix, cutoff = .90, verbose = TRUE)
+training.decor = training.nonzerovar[,-removecor]
+dim(training.decor)
+
+```
+
+Split data into 70:30 ratio to training and testing for cross validation.
+```{r}
+inTrain <- createDataPartition(y=training.decor$classe, p=0.7, list=FALSE)
+training <- training.decor[inTrain,]; testing <- training.decor[-inTrain,]
+dim(training);dim(testing)
+
+```
+
+Analysis
+Regression Tree
+
+```{r}
+library(tree)
+set.seed(12345)
+tree.training=tree(classe~.,data=training)
+summary(tree.training)
+
+```
+The tree presented as output is having lot of branches and we should reduce the number of branches.
+```{r}
+plot(tree.training)
+text(tree.training,pretty=0, cex =.8)
+
+```
+
+Cross Validation
+
+We are going to check the performance of the tree on the testing data by cross validation.
+
+```{r}
+tree.pred=predict(tree.training,testing,type="class")
+predMatrix = with(testing,table(tree.pred,classe))
+sum(diag(predMatrix))/sum(as.vector(predMatrix))
+```
+The 0.7 is not very accurate.
+
+This tree was grown to full depth, and might be too variable. We now use Cross Validation to prune it.
+```{r}
+cv.training=cv.tree(tree.training,FUN=prune.misclass)
+cv.training
+
+```
+
+
+```{r}
+plot(cv.training)
+```
+
+It shows that when the size of the tree goes down, the deviance goes up. It means the 21 is a good size (i.e. number of terminal nodes) for this tree. We do not need to prune it.
+
+Suppose we prune it at size of nodes at 18.
+```{r}
+prune.training=prune.misclass(tree.training,best=18)
+```
+Now lets evaluate this pruned tree on the test data.
+```{r}
+tree.pred=predict(prune.training,testing,type="class")
+predMatrix = with(testing,table(tree.pred,classe))
+sum(diag(predMatrix))/sum(as.vector(predMatrix))
+```
+We use less predictors to get almost the same result around 0.67. By pruning, we got a shallower tree, which is easier to interpret.
+
+Random Forests
+
+Random forests build lots of bushy trees, and then average them to reduce the variance.
+
+```{r}
+require(randomForest)
+set.seed(12345)
+
+rf.training=randomForest(classe~.,data=training,ntree=100, importance=TRUE)
+rf.training
+
+```
+Our Random Forest model shows OOB estimate of error rate: 0.59% for the training data. Now we will predict it for out-of sample accuracy.
+
+Now lets evaluate this tree on the test data.
+
+```{r}
+tree.pred=predict(rf.training,testing,type="class")
+predMatrix = with(testing,table(tree.pred,classe))
+sum(diag(predMatrix))/sum(as.vector(predMatrix))
+
+```
+0.99 means we got a very accurate estimate.
+
+No. of variables tried at each split: 6. It means every time we only randomly use 6 predictors to grow the tree. Since p = 43, we can have it from 1 to 43, but it seems 6 is enough to get the good result.
+
+Now we can predict the testing data from the website.
+```{r}
+answers <- predict(rf.training, testingOrg)
+answers
+
+```
+
