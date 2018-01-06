@@ -4,7 +4,7 @@ author: "Jitendra Gaur"
 date: "Monday, October 27, 2014"
 output: html_document
 ---
-
+'''R Script
 Loading the training and testing dataset.
 ```{r}
 trainingOrg = read.csv(file.choose(), na.strings=c("", "NA", "NULL"))
