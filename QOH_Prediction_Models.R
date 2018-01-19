@@ -273,7 +273,7 @@ suppressWarnings(library(RJDBC))
         cand_id1 <- Candidate_data$CAND_ID[i]
         CND_REV <- paste("'",CND_REV,"'", sep = "")
         cand_id1 <- paste("'",cand_id1,"'", sep = "")
-        testupdate <- paste("Update TAB_QOH_CANDIDATE_DATA set JOIN_PRED=",join_pred1,",CAND_REVW=",CND_REV,",EMPLOYEE_POTENTIAL=",EMP_POT," where CAND_ID=",cand_id1)
+        testupdate <- paste("Update CANDIDATE_DATA set JOIN_PRED=",join_pred1,",CAND_REVW=",CND_REV,",EMPLOYEE_POTENTIAL=",EMP_POT," where CAND_ID=",cand_id1)
         dbSendUpdate(jdbcConnection, testupdate)
     }
     print("Update successful")
