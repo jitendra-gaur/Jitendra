@@ -17,10 +17,10 @@ suppressWarnings(library(RJDBC))
     {
         #read  data
         jdbcDriver <- JDBC(driverClass="oracle.jdbc.OracleDriver", classPath="C:/Oracle/Ora11gR2/jdbc/lib/ojdbc6.jar")
-        jdbcConnection <- dbConnect(jdbcDriver, "jdbc:oracle:thin:@//129.144.51.94:1521/PIBM.edrx.oraclecloud.internal", "PC_QUALITYOFHIRE", "welcome1") 
-        Candidate_data <- dbGetQuery(jdbcConnection, "SELECT * FROM TAB_QOH_CANDIDATE_DATA")
-        Past_Candidate_data <- dbGetQuery(jdbcConnection, "SELECT * FROM TAB_QOH_PAST_CANDIDATE_DATA")
-        Succession_data <- dbGetQuery(jdbcConnection, "SELECT * FROM TAB_QOH_PLAN_DETAILS")
+        jdbcConnection <- dbConnect(jdbcDriver, "jdbc:oracle:thin:@//129.144.51.94:1521/____._____.____", "username", "password") 
+        Candidate_data <- dbGetQuery(jdbcConnection, "SELECT * FROM CANDIDATE_DATA")
+        Past_Candidate_data <- dbGetQuery(jdbcConnection, "SELECT * FROM PAST_CANDIDATE_DATA")
+        Succession_data <- dbGetQuery(jdbcConnection, "SELECT * FROM PLAN_DETAILS")
         Plan_ID <- Succession_data$PLAN_ID[2]
         Job_ID <- Succession_data$PER_JOBS_NAME[2]
         
