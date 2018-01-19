@@ -1,4 +1,4 @@
-#Quality of Hire
+
 {
     
 rm(list=ls())
@@ -8,7 +8,7 @@ suppressWarnings(library(dummies))
 suppressWarnings(library(e1071))
 suppressWarnings(library(RJDBC))
 
-#Quality of Hire - Regression Analysis
+#Regression Analysis
 #Regression models are crested with current employee data. These models are used to analyze the candidates.
 #Several models are created with diffirent variable groups and different Data Science methods are used
 #to improve the models. Finally ensembling is used to get the end results.
