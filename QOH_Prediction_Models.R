@@ -8,9 +8,9 @@ suppressWarnings(library(dummies))
 suppressWarnings(library(e1071))
 suppressWarnings(library(RJDBC))
 
-#Regression Analysis
-#Regression models are crested with current employee data. These models are used to analyze the candidates.
-#Several models are created with diffirent variable groups and different Data Science methods are used
+# Regression Analysis
+# Regression models are crested with current employee data. These models are used to analyze the candidates.
+# Several models are created with diffirent variable groups and different Data Science methods are used
 #to improve the models. Finally ensembling is used to get the end results.
 {
     #Getting Started with Analysis
@@ -213,7 +213,7 @@ suppressWarnings(library(RJDBC))
 }
 
 
-#Quality of Hire - Joining Prediction
+#Joining Prediction
 #SVM is used to predict the probability of joining. Bagging is used to reduce the variance.
 {
     #Getting Started with Analysis
@@ -261,7 +261,7 @@ suppressWarnings(library(RJDBC))
 }
 
 
-#Quality of Hire - Write to Table
+# Write to Table
 {   
     print("Updating values to the database")
     for (i in 1:dim(Candidate_data)[1])
