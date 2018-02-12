@@ -46,8 +46,7 @@ Given the number of archetypes k:
 (i = 1, . . . , n)
 
 2.2. Recalculate archetypes : solve system of linear equations.
-2.3. Find best beta for the given set of archetypes ˜ Z: solve k convex least squares problems
-(j = 1, . . . , k)
+2.3. Find best beta for the given set of archetypes ˜ Z: solve k convex least squares problems (j = 1, . . . , k)
 2.4. Recalculate archetypes Z.
 2.5. Calculate residual sum of squares RSS.
 3. Post-processing: remove dummy row and rescale archetypes.
