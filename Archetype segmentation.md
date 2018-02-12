@@ -31,3 +31,24 @@ o Whether a category is aspirational is a matter of judgment, not something that
 o The goal would be to aim messages at what consumers want to be, not what they are.
 • In categories where the extreme types of consumer are the trend-setters
 o Speak to them and the others will follow
+
+
+Given is an n × m matrix X representing a multivariate data set with n observations and m attributes. For a given k the archetypal analysis finds the matrix Z of k m-dimensional archetypes according to the two fundamentals:
+(1) The data are best approximated by convex combinations of the archetypes, i.e., they minimize
+(2) The archetypes are convex combinations of the data points:
+
+With a view to the implementation, the algorithm consists of the following steps:
+Given the number of archetypes k:
+1. Data preparation and initialization: scale data, add a dummy row (see below) and initialize in a way that the the constraints are fulfilled to calculate the starting archetypes Z.
+2. Loop until RSS reduction is sufficiently small or the number of maximum iterations is reached:
+
+2.1. Find best alpha for the given set of archetypes Z: solve n convex least squares problems
+(i = 1, . . . , n)
+
+2.2. Recalculate archetypes : solve system of linear equations.
+2.3. Find best beta for the given set of archetypes ˜ Z: solve k convex least squares problems
+(j = 1, . . . , k)
+2.4. Recalculate archetypes Z.
+2.5. Calculate residual sum of squares RSS.
+3. Post-processing: remove dummy row and rescale archetypes.
+
