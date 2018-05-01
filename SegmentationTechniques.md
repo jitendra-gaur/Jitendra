@@ -4,7 +4,7 @@ Four different segmentation techniques
 
 Factor segmentation is based on factor analysis. The first step is to factor-analyze or form groups of attributes that express some sort of common theme. The number of factors is determined using a combination of statistics and knowledge of the category. Once the number of factors has been determined, each respondent receives a score for each of the factors. Respondents are then assigned to the factor that has the highest score.
 
-K-Means Clustering
+# K-Means Clustering
 
 This method attempts to identify similar groups of respondents based on selected characteristics. Like most segmentation techniques, k-means clustering requires that the analyst specifies the desired number of clusters or segments. During the procedure the distances of each respondent from the cluster centers are calculated. The procedure repeats until the distance between cluster centers is maximized (or other specified criterion is reached). Respondents are assigned to the cluster with the nearest center.
 
