@@ -1,0 +1,1 @@
+Four different segmentation techniques
