@@ -1,6 +1,6 @@
 Four different segmentation techniques
 
-Factor Segmentation
+# Factor Segmentation
 
 Factor segmentation is based on factor analysis. The first step is to factor-analyze or form groups of attributes that express some sort of common theme. The number of factors is determined using a combination of statistics and knowledge of the category. Once the number of factors has been determined, each respondent receives a score for each of the factors. Respondents are then assigned to the factor that has the highest score.
 
